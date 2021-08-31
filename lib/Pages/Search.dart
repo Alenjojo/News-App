@@ -47,7 +47,7 @@ class _SearchState extends State<Search> {
           });
           isSearching = false;
         }else if(response.statusCode == 429){
-          var response = await client.get(Uri.parse('https://newsapi.org/v2/everything?q=$search&from=2021-08-30&to=2021-08-30&sortBy=popularity&apiKey=d5ffb9c7a7a946a6a2ad0c74b80c6810'));
+          var response = await client.get(Uri.parse('https://newsapi.org/v2/everything?q=$search&from=2021-08-30&to=2021-08-30&sortBy=popularity&apiKey=0912b3a1122a40a0b18acdf86c313a20'));
           var jsonString = response.body;
           var jsonMap = jsonDecode(jsonString);
           newsModel = Welcome.fromJson(jsonMap);
