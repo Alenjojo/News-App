@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/auth/NewUser.dart';
+import 'package:news_app/model/news.dart';
+import 'package:news_app/services/api_manager.dart';
 import 'package:news_app/services/auth.dart';
 
 class Home extends StatefulWidget {
@@ -12,26 +14,63 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  void initState() {
-  }
-
+  late Future<Welcome> _newsModel;
   AuthMethod authMethod = new AuthMethod();
 
-
+  void initState() {
+    _newsModel = API_Manager().getnews();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: [
-        FloatingActionButton(onPressed: (){
-          final snackBar = SnackBar(content: Text('Signed Out'));
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          authMethod.signOut();
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => FirstView()),
-          );
-        },),
-      ],)
+      body:
+      // Column(children: [
+      //   FloatingActionButton(onPressed: (){
+      //     final snackBar = SnackBar(content: Text('Signed Out'));
+      //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      //     authMethod.signOut();
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(builder: (context) => FirstView()),
+      //     );
+      //   },),
+        Container(
+          child: FutureBuilder<Welcome>(
+            future: _newsModel,
+            builder: (context, snapshot){
+              if(snapshot.hasData){
+                return ListView.builder(
+                  itemCount: snapshot.data!.articles.length,
+                    itemBuilder: (context, index){
+                    var article = snapshot.data!.articles[index];
+                  return Container(
+                    height: 100,
+                    child: Row(
+                      children: [
+                        Card(
+                          clipBehavior: Clip.antiAlias,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                          child: AspectRatio(
+                              aspectRatio: 1,
+                              child: Image.network(
+                                article.urlToImage,
+                                fit: BoxFit.cover,
+                              )),
+                        ),
+                      ],
+                    ),
+                  );
+                });
+              }else{
+                return Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
+        )
+      // ],)
     );
   }
 
