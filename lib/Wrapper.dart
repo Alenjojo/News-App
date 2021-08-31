@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:news_app/Pages/BaseLayer.dart';
 import 'package:news_app/auth/NewUser.dart';
 import 'package:news_app/services/Constant.dart';
 
@@ -13,7 +14,7 @@ class Wrapper extends StatelessWidget {
     if (user?.uid == null) {
       return FirstView();
     } else {
-      return Home();
+      return BaseLayer();
     }
   }
   check(){

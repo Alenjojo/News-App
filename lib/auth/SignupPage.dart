@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app/Pages/BaseLayer.dart';
 import 'package:news_app/Pages/Home.dart';
 import 'package:news_app/services/auth.dart';
 import 'package:news_app/services/snack_bar_service.dart';
@@ -132,7 +133,7 @@ class _SignUpState extends State<SignUp> {
 
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => Home()),
+                              MaterialPageRoute(builder: (context) => BaseLayer()),
                             );
                           }
                         }));

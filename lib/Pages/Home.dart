@@ -44,15 +44,56 @@ class _HomeState extends State<Home> {
                   itemCount: snapshot.data!.articles.length,
                     itemBuilder: (context, index){
                     var article = snapshot.data!.articles[index];
-                  return Container(
-                    height: 100,
-                    child: Row(
-                      children: [
-                        Card(
-                          clipBehavior: Clip.antiAlias,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(24),
+                  if(index != 0){
+                    return
+                      Container(
+                      height: 140,
+                      child: Row(
+                        children: [
+                          Card(
+                            clipBehavior: Clip.antiAlias,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: AspectRatio(
+                                aspectRatio: 1,
+                                child: Image.network(
+                                  article.urlToImage,
+                                  fit: BoxFit.cover,
+                                )),
                           ),
+                          SizedBox(width: 16),
+                          Flexible(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  article.title,
+                                  overflow: TextOverflow.visible,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                // Text(
+                                //   article.description,
+                                //   maxLines: 2,
+                                //   overflow: TextOverflow.ellipsis,
+                                // ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }else{
+                    return Card(
+                      child: InkWell(
+                        splashColor: Colors.blue.withAlpha(30),
+                        onTap: () {
+                        },
+                        child:  SizedBox(
+                          width: 200,
+                          height: 300,
                           child: AspectRatio(
                               aspectRatio: 1,
                               child: Image.network(
@@ -60,9 +101,9 @@ class _HomeState extends State<Home> {
                                 fit: BoxFit.cover,
                               )),
                         ),
-                      ],
-                    ),
-                  );
+                      ),
+                    );
+                  }
                 });
               }else{
                 return Center(child: CircularProgressIndicator());
@@ -72,6 +113,12 @@ class _HomeState extends State<Home> {
         )
       // ],)
     );
+  }
+
+ Widget search() {
+    return Column(children: [
+      Text("hii")
+    ],);
   }
 
 }
