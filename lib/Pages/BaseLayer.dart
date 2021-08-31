@@ -51,7 +51,7 @@ class _BaseLayerState extends State<BaseLayer> {
               textAlign: TextAlign.center),
           BottomNavyBarItem(
               icon: Icon(Icons.person),
-              title: Text('Profile.dart'),
+              title: Text('Profile'),
               activeColor: Colors.black,
               inactiveColor: Colors.black,
               textAlign: TextAlign.center),

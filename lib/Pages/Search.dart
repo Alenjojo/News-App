@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/model/news.dart';
-import 'package:http/http.dart' as http;
-
+import 'package:news_app/services/api_manager.dart';
 import 'Description.dart';
 
 class Search extends StatefulWidget {
@@ -30,37 +27,8 @@ class _SearchState extends State<Search> {
   }
 
   initiateSearch() {
-    Future<Welcome> getsearchnews() async {
        search = searchtextEditingcontroller.text.trim();
-
-      var client = http.Client();
-
-
-      try{
-        var response = await client.get(Uri.parse('https://newsapi.org/v2/everything?q=$search&from=2021-08-30&to=2021-08-30&sortBy=popularity&apiKey=d5ffb9c7a7a946a6a2ad0c74b80c6810'));
-        if(response.statusCode == 200){
-          var jsonString = response.body;
-          var jsonMap = jsonDecode(jsonString);
-          setState(() {
-            newsModel = Welcome.fromJson(jsonMap);
-            _newsModel = newsModel;
-          });
-          isSearching = false;
-        }else if(response.statusCode == 429){
-          var response = await client.get(Uri.parse('https://newsapi.org/v2/everything?q=$search&from=2021-08-30&to=2021-08-30&sortBy=popularity&apiKey=0912b3a1122a40a0b18acdf86c313a20'));
-          var jsonString = response.body;
-          var jsonMap = jsonDecode(jsonString);
-          newsModel = Welcome.fromJson(jsonMap);
-        }
-      } catch(Exception){
-        print("$Exception");
-        return newsModel;
-      }
-      return newsModel;
-    }
-   setState(() {
-     _newsModel = getsearchnews();
-   });
+    _newsModel = API_Manager().getsearchnews(search);
   }
 
   @override
