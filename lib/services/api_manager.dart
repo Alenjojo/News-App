@@ -10,8 +10,13 @@ class API_Manager{
     var newsModel = null;
 
     try{
-      var response = await client.get(Uri.parse(Strings.news_url));
+      var response = await client.get(Uri.parse('https://newsapi.org/v2/everything?domains=wsj.com&apiKey=d5ffb9c7a7a946a6a2ad0c74b80c6810'));
       if(response.statusCode == 200){
+        var jsonString = response.body;
+        var jsonMap = jsonDecode(jsonString);
+        newsModel = Welcome.fromJson(jsonMap);
+      }else if(response.statusCode == 429){
+        var response = await client.get(Uri.parse('https://newsapi.org/v2/everything?domains=wsj.com&apiKey=0912b3a1122a40a0b18acdf86c313a20'));
         var jsonString = response.body;
         var jsonMap = jsonDecode(jsonString);
         newsModel = Welcome.fromJson(jsonMap);
