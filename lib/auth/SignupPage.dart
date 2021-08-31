@@ -14,7 +14,6 @@ class _SignUpState extends State<SignUp> {
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: 'sign-up-form');
   final TextEditingController _fullNameController = TextEditingController();
-  final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   late String _snackBarText;
@@ -27,7 +26,6 @@ class _SignUpState extends State<SignUp> {
     _emailController.dispose();
     _passwordController.dispose();
     _fullNameController.dispose();
-    _userNameController.dispose();
     super.dispose();
   }
 
@@ -65,16 +63,6 @@ class _SignUpState extends State<SignUp> {
                     //   if (value.isEmpty) {
                     //     return 'full-name cannot be empty';
                     //   }
-                    //   return null;
-                    // },
-                  ),
-                  TextFormField(
-                    controller: _userNameController,
-                    decoration: const InputDecoration(labelText: 'Username'),
-                    // validator: (String value) {
-                    //   if (value.trim().isEmpty) {
-                    //     return 'username cannot be empty';
-                    //   } //TODO: Show error if username contains spaces    //TODO: Check uniqueness of username
                     //   return null;
                     // },
                   ),
@@ -122,10 +110,13 @@ class _SignUpState extends State<SignUp> {
                     onTap: () async {
                       if (_formKey.currentState!.validate()) {
 
-                        authMethod
-                            .signupwithemailandpassword(_emailController.text.trim(),
-                            _passwordController.text.trim())
+                             authMethod
+                            .signupwithemailandpassword(
+                            _emailController.text.trim(),
+                            _passwordController.text.trim(),
+                            _fullNameController.text.trim())
                             .then((val) => setState(() {
+
                           if(val == null){
                             final snackBar = SnackBar(content: Text('Invalid Input'));
                             ScaffoldMessenger.of(context).showSnackBar(snackBar);
