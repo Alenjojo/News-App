@@ -13,6 +13,7 @@ class AuthMethod {
           email: email,
           password: password
       );
+      String? name = _auth.currentUser!.displayName;
       return userCredential.user!.uid;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -25,12 +26,13 @@ class AuthMethod {
     }
   }
 
-  Future signupwithemailandpassword(String email, String password) async {
+  Future signupwithemailandpassword(String email, String password, String name) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: email,
           password: password
       );
+      _auth.currentUser!.updateDisplayName(name);
       return userCredential.user!.uid;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
