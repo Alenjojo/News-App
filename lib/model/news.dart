@@ -54,22 +54,22 @@ class Article {
 
   factory Article.fromJson(Map<String, dynamic> json) => Article(
     source: Source.fromJson(json["source"]),
-    author: json["author"] == null ? null : json["author"],
+    author: json["author"],
     title: json["title"],
     description: json["description"],
     url: json["url"],
-    urlToImage: json["urlToImage"] == null ? null : json["urlToImage"],
+    urlToImage: json["urlToImage"],
     publishedAt: DateTime.parse(json["publishedAt"]),
     content: json["content"],
   );
 
   Map<String, dynamic> toJson() => {
     "source": source.toJson(),
-    "author": author == null ? null : author,
+    "author": author,
     "title": title,
     "description": description,
     "url": url,
-    "urlToImage": urlToImage == null ? null : urlToImage,
+    "urlToImage": urlToImage,
     "publishedAt": publishedAt.toIso8601String(),
     "content": content,
   };
