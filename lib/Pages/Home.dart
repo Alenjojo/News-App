@@ -1,8 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/Pages/Description.dart';
-import 'package:news_app/auth/NewUser.dart';
 import 'package:news_app/model/news.dart';
 import 'package:news_app/services/api_manager.dart';
 import 'package:news_app/services/auth.dart';
@@ -19,23 +17,14 @@ class _HomeState extends State<Home> {
   AuthMethod authMethod = new AuthMethod();
 
   void initState() {
-    _newsModel = API_Manager().getnews();
+    _newsModel = API_Manager().getsearchnews('all');
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body:
-      // Column(children: [
-      //   FloatingActionButton(onPressed: (){
-      //     final snackBar = SnackBar(content: Text('Signed Out'));
-      //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      //     authMethod.signOut();
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(builder: (context) => FirstView()),
-      //     );
-      //   },),
         Container(
           child: FutureBuilder<Welcome>(
             future: _newsModel,
@@ -70,7 +59,7 @@ class _HomeState extends State<Home> {
                                     fit: BoxFit.cover,
                                   )),
                             ),
-                            SizedBox(width: 16),
+                            SizedBox(width: 26),
                             Flexible(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,14 +68,9 @@ class _HomeState extends State<Home> {
                                     article.title,
                                     overflow: TextOverflow.visible,
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 22,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  // Text(
-                                  //   article.description,
-                                  //   maxLines: 2,
-                                  //   overflow: TextOverflow.ellipsis,
-                                  // ),
                                 ],
                               ),
                             ),
@@ -101,33 +85,25 @@ class _HomeState extends State<Home> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Description(article: article,)),
+                            MaterialPageRoute(builder: (context) => Description(article:article)),
                           );
                         },
-                        child:  SizedBox(
-                          width: 200,
-                          height: 350,
+                        child:  Container(
+                            margin: EdgeInsets.only(top: 0),
+                          width: double.infinity,
                           child: Stack(children: [
                             Flexible(
-                              child: AspectRatio(
-                                  aspectRatio: 1,
-                                  child: Hero(
-                                    tag: article.urlToImage,
-                                    child: Image.network(
-                                      article.urlToImage,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  )),
+                              child: Image.network(
+                                    article.urlToImage,
+                                    fit: BoxFit.cover,
+                                  ),
                             ),
                             Padding(
                               padding: EdgeInsets.all(10),
-                              child: Align(
-                                alignment: FractionalOffset.bottomCenter,
-                                child: Text(article.title,
+                              child: Text(article.title,
                                 style: TextStyle(color: Colors.white,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold),),
-                              ),
                             )
                           ],)
                         ),
@@ -141,7 +117,6 @@ class _HomeState extends State<Home> {
             },
           ),
         )
-      // ],)
     );
   }
 
