@@ -19,7 +19,9 @@ The code base of News App is available.
 ### 1> Clone `https://github.com/Alenjojo/News-App` into your file destination
 ### 2> Open your suitable flutter enabled IDE and build the app.
 ### 3> It has been connected to firebase so you will have to create an account to sign in to get the full access.
-
+Guest Account:- <br>
+`a@gmail.com`<br>
+`1234567890`
 
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
